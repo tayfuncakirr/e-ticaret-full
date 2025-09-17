@@ -5,6 +5,7 @@ import Navbar from './components/navbar'
 import './App.css'
 import Signin from './pages/auth/signin'
 import Signup from './pages/auth/signup'
+import Products from './pages/products'
 
 function App() {
 
@@ -12,21 +13,17 @@ function App() {
     <BrowserRouter>
     <Navbar/>
     <Routes>
-      <Route path='/' element={<Home/>}/>
+      <Route path='/' element={<Products/>}/>
       <Route path="/signin" element={<Signin/>}/>
       <Route path="/signup" element={<Signup/>}/>
+      
     </Routes>
     </BrowserRouter>
     
   )
 }
 
-function Home() {
-  return (
 
-    <div>Home</div>
-  )
-}
 
 
 export default App

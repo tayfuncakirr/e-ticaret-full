@@ -17,3 +17,35 @@ body {
   margin:0;
   padding: 0;
 }
+  /* Product sayfası*/
+.card-container {
+  border: 1px solid red;
+  display: grid;
+  justify-content: center;
+  grid-template-columns:repeat(auto-fit, minmax(250px,auto));
+  gap:20px
+}
+.card {
+  width: 250px;
+  border: 1px solid gray;
+}
+
+/*sign in component*/
+
+.form-wrapper {
+  width: 100%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
+}
+.form-container {
+  border: 1px solid gray;
+}
+
+.form-container label {
+  display: block;
+}
+.form-container button {
+  width: 100%;
+}
