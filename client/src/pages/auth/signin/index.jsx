@@ -7,7 +7,40 @@ function Signin() {
     const signinValidations = object({
       email:string().email("geçerli bir email giriniz").required(requiredMessage),
       password:string().min(5, "en az 5 karakter giriniz.").required(requiredMessage)
-    })
+    });
+
+    const handleSubmit = async (values,{setSubmitting, resetForm}) => {
+
+        try {
+            
+        const response = await fetch("http://localhost:5000/api/auth/login", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify(values)
+        });
+
+        const data =await response.json();
+        console.log(data);
+        if(response.ok){
+            const {token, user} = data;
+            localStorage.setItem("token", token);
+            localStorage.setItem("user", JSON.stringify(user))
+            alert("giriş başarılı");
+            resetForm();
+        }
+        else {
+            alert(data.message)
+        }
+        
+    }
+    catch(e) {
+            console.log(e);
+            alert("bir hata oluştu")
+        }
+        finally {
+            setSubmitting(false);
+        }
+        }
   return (
     <div className='form-wrapper'>
         <div className='form-container'>
@@ -16,11 +49,7 @@ function Signin() {
                 password:"",  
             }}
             validationSchema={signinValidations}
-            onSubmit={async(values) =>{
-                await new Promise((resolve) => setTimeout(resolve,500));
-                console.log(values)
-                
-            }}
+            onSubmit={handleSubmit}
               >
              {({isSubmitting,errors, touched}) => (
                 <Form>

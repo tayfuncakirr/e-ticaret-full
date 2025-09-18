@@ -11,6 +11,33 @@ const signUpValidations = object({
     password:string().min(5, "en az 5 karakter giriniz").required(requiredMessage)
 })
 
+const handleSubmit = async (values, {setSubmitting,resetForm}) => {
+    try {
+        const response = await fetch("http://localhost:5000/api/auth/register",{
+            method:"POST",
+            headers:{"Content-Type": "application/json"},
+            body: JSON.stringify(values),
+        });
+        const data = await response.json();
+        console.log(data);
+
+        if (response.ok) {
+            alert ("kayıt başarılı");
+            resetForm();
+        }
+        else {
+            alert(data.message);
+        }
+    }
+    catch (e) {
+            console.log(e);
+            alert("bir hata oluştu");
+        }
+    finally {
+        setSubmitting(false);
+    }
+}
+
   return (
     <div className='form-wrapper'>
         <div className="form-container">
@@ -22,10 +49,7 @@ const signUpValidations = object({
                 password:"",
             }}
             validationSchema={signUpValidations}
-            onSubmit={async(values) => {
-             await new Promise((resolve) => setTimeout(resolve,500))
-             console.log(values)
-            }}
+            onSubmit={handleSubmit}
             >
              
                {({isSubmitting,errors,touched}) =>(
