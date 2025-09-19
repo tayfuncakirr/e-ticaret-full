@@ -1,21 +1,25 @@
 import { useState } from 'react'
 import { Routes,Route, BrowserRouter } from 'react-router-dom'
-import Navbar from './components/navbar'
+import Navbar from './components/navbar/Navbar'
 
 import './App.css'
-import Signin from './pages/auth/signin'
-import Signup from './pages/auth/signup'
-import Products from './pages/products'
+import Signin from './pages/auth/signin/Signin'
+import Signup from './pages/auth/signup/Signup'
+import Products from './pages/products/Products'
+import Category from './pages/categories/Category'
 
 function App() {
+   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")))
 
   return (
     <BrowserRouter>
-    <Navbar/>
+    <Category/>
+    <Navbar user={user} setUser={setUser}/>
     <Routes>
-      <Route path='/' element={<Products/>}/>
-      <Route path="/signin" element={<Signin/>}/>
-      <Route path="/signup" element={<Signup/>}/>
+      
+      <Route path='/products' element={<Products/>}/>
+      <Route path="/signin" element={<Signin setUser={setUser}/>}/>
+      <Route path="/signup" element={<Signup setUser={setUser}/>}/>
       
     </Routes>
     </BrowserRouter>

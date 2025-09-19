@@ -1,8 +1,10 @@
 import React from 'react'
 import {Formik ,Field, Form} from "formik"
 import { object,string } from 'yup'
+import { useNavigate } from 'react-router-dom'
 
-function Signin() {
+function Signin({setUser}) {
+    const navigate = useNavigate();
     const requiredMessage = "zorunlu alan"
     const signinValidations = object({
       email:string().email("geçerli bir email giriniz").required(requiredMessage),
@@ -26,7 +28,9 @@ function Signin() {
             localStorage.setItem("token", token);
             localStorage.setItem("user", JSON.stringify(user))
             alert("giriş başarılı");
+            setUser(user);
             resetForm();
+            navigate("/");
         }
         else {
             alert(data.message)

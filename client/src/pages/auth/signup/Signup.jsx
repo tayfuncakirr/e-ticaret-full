@@ -1,8 +1,10 @@
 import React from 'react'
 import { Formik,Field,Form } from 'formik'
 import {object,string} from "yup"
+import { useNavigate } from 'react-router-dom'
 
 function  Signup() {
+const navigate = useNavigate();
 const requiredMessage = "zorunlu alan"
 const signUpValidations = object({
     name:string().required(requiredMessage),
@@ -24,6 +26,7 @@ const handleSubmit = async (values, {setSubmitting,resetForm}) => {
         if (response.ok) {
             alert ("kayıt başarılı");
             resetForm();
+            navigate("/signin");
         }
         else {
             alert(data.message);

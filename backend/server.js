@@ -7,6 +7,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use("/api/products", require("./routes/Products"));
+app.use("/api/categories", require("./routes/Categories"));
+
+
 // Test endpoint
 app.get("/", (req, res) => {
   res.send("Backend çalışıyor 🚀");
@@ -26,3 +30,5 @@ mongoose.connect("mongodb://127.0.0.1:27017/eticaret", {
 
 const authRoutes = require("./routes/auth");
 app.use("/api/auth", authRoutes);
+
+
