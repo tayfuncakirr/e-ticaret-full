@@ -7,22 +7,26 @@ import Signin from './pages/auth/signin/Signin'
 import Signup from './pages/auth/signup/Signup'
 import Products from './pages/products/Products'
 import Category from './pages/categories/Category'
+import ProductsProvider from './context/ProductsContext'
+import Home from './pages/home/Home'
 
 function App() {
    const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")))
 
   return (
+    <ProductsProvider>
     <BrowserRouter>
     <Category/>
     <Navbar user={user} setUser={setUser}/>
     <Routes>
-      
+      <Route path='/' index element={<Home/>}/>
       <Route path='/products' element={<Products/>}/>
       <Route path="/signin" element={<Signin setUser={setUser}/>}/>
       <Route path="/signup" element={<Signup setUser={setUser}/>}/>
       
     </Routes>
     </BrowserRouter>
+    </ProductsProvider>
     
   )
 }

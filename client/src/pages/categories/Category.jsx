@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext} from 'react'
+import { ProductsContext } from '../../context/ProductsContext'
 
 function Category() {
-  const [category, setCategory] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:5000/api/categories")
-    .then(response => response.json())
-    .then(data => setCategory(data))
-    .catch(e => console.log(e))
-  },[])
+  const {category} = useContext(ProductsContext)
+  
   return (
     <div className='category-container'>
       <h2>Kategoriler</h2>
