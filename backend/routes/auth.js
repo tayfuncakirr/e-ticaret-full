@@ -8,7 +8,7 @@ const router = express.Router();
 // Register
 router.post("/register", async (req, res) => {
   try {
-    const { name, surname, email, password } = req.body;
+    const { name, surname, email, password, role } = req.body;
 
     // Email zaten var mı kontrol
     const existingUser = await User.findOne({ email });
@@ -29,6 +29,7 @@ router.post("/register", async (req, res) => {
 
 // Login
 router.post("/login", async (req, res) => {
+  console.log(req.body)
   try {
     const { email, password } = req.body;
 
@@ -43,7 +44,7 @@ router.post("/login", async (req, res) => {
     // Token oluştur
     const token = jwt.sign({ id: user._id }, "SECRET_KEY", { expiresIn: "1h" });
 
-    res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+    res.json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role || "user" } });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
