@@ -3,6 +3,8 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
+
+
 // Routes
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/products");
@@ -18,6 +20,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/uploads", express.static("uploads"));
 
 // Test endpoint
 app.get("/", (req, res) => {

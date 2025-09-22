@@ -49,10 +49,10 @@ router.post("/", authMiddleware, adminMiddleware, upload.array("images", 5), asy
     const { name, description, price, stock, category } = req.body;
 
     // resimlerin path'lerini al
-    const images = req.files.map(file => "/uploads/" + file.filename);
+    const imagePath = req.files.map(file => "/uploads/" + file.filename);
 
     const product = new Product({ 
-      name, description, price, stock, category, images 
+      name, description, price, stock, category, images:imagePath
     });
 
     await product.save();

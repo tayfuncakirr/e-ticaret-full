@@ -30,18 +30,26 @@ function ProductForm() {
          onSubmit={async (values,{resetForm}) => {
             const formData = new FormData();
               for(let key in values) {
+                if (key !== "images"){
               formData.append(key, values[key]);
-
+            }
+            }
               for (let i = 0; i < values.images.length; i++ ) {
                 formData.append("images",values.images[i])
               }
-    }
+    
            try {
             const response = await fetch("http://localhost:5000/api/products",{
                 method:"POST",
                 headers:{ Authorization:"Bearer " + token, },
                 body: formData,
             });
+
+            if (!response.ok) {
+                const text = await response.text();
+                console.error("backend error", text);
+                throw new Error("Ürün ekleme başarısız: " + response.status);
+            }
             const data = await response.json();
             console.log("yeni ürün:", data)
             alert("ürün başarıyla eklendi")
@@ -73,8 +81,8 @@ function ProductForm() {
                     </div>
                     <div>
                         <div>
-                            <label htmlFor="image">image</label>
-                            <input id="image" name="image" type="file"
+                            <label htmlFor="images">image</label>
+                            <input id="images" name="images" type="file"
                             multiple onChange={(event) => {setFieldValue("images",event.currentTarget.files)}} 
                             disabled={isSubmitting}></input>
                         </div>
