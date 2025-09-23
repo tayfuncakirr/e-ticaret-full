@@ -25,8 +25,23 @@ const router = express.Router();
 // Ürün listele (herkes görebilir)
 router.get("/", async (req, res) => {
   try {
-    const products = await Product.find().populate("category", "name");
-    res.json(products);
+    const page = parseInt(req.query.page) || 1;   // hangi sayfa
+    const limit = parseInt(req.query.limit) || 10; // kaç ürün
+    const skip = (page - 1) * limit;
+
+    const products = await Product.find()
+      .skip(skip)
+      .limit(limit)
+      .populate("category", "name");
+
+    const total = await Product.countDocuments(); // toplam ürün sayısı
+
+    res.json({
+      total,                  // toplam ürün
+      page,                   // mevcut sayfa
+      totalPages: Math.ceil(total / limit), // toplam sayfa
+      products                // ürünler
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
