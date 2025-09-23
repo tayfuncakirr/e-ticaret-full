@@ -38,6 +38,7 @@ function ProductList() {
     <button onClick={() => setPage(page -1)} disabled={page === 1}>Önceki</button>
     <span>{page} / {totalPages}</span>
     <button onClick={() => setPage(page +1)} disabled={page === totalPages}>Sonraki</button>
+    <span> Toplam Ürün: {total}</span>
     </>
   )
 }
