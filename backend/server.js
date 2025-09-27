@@ -2,8 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
-
-
+const path = require("path"); // <-- eklendi
 
 // Routes
 const authRoutes = require("./routes/auth");
@@ -16,11 +15,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Static dosyalar için (resimlerin erişilebilir olması)
+app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // <-- eklendi
+
 // API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/categories", categoryRoutes);
-app.use("/uploads", express.static("uploads"));
 
 // Test endpoint
 app.get("/", (req, res) => {
@@ -40,5 +41,3 @@ mongoose
     );
   })
   .catch((err) => console.error("MongoDB bağlantı hatası", err));
-
-
