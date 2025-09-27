@@ -103,7 +103,7 @@ function ProductList() {
                     price:editingProduct.price ??"",
                     stock:editingProduct.stock ?? "",
                     description:editingProduct.description ?? "",
-                    category:editingProduct.category ?? "",
+                    category:editingProduct.category._id ?? "",
                 }}
                 onSubmit={async (values, {setSubmitting}) => {
                     console.log("gönderilen: ", values)
@@ -113,7 +113,10 @@ function ProductList() {
                         formData.append("price", values.price);
                         formData.append("stock", values.stock);
                         formData.append("description", values.description);
-                        formData.append("category",values.category || "");
+                        formData.append("category", typeof values.category === "string"
+                            ? values.category
+                            : values.category._id
+                        );
 
                         newImages.forEach((file) => formData.append("images", file));
 
