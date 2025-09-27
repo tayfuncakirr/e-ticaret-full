@@ -53,7 +53,7 @@ catch (e) {
             <label htmlFor="">Fotoğraf ekle</label>
             <input type="file"  accept='image/*' onChange={(e) => setImage(e.target.files[0])} />
         </div>
-        <button type='submit'>Kategori Ekle</button>
+        <button type='submit' disabled= {!token}>Kategori Ekle</button>
        </form>
     </div>
   )

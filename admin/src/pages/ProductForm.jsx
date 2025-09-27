@@ -97,7 +97,7 @@ function ProductForm() {
                         ))}
                     </Field>
                     </div>
-                    <button type='submit' disabled={isSubmitting}>Ekle</button>
+                    <button type='submit' disabled={isSubmitting || !token}>Ekle</button>
             </Form>
 
             )}
