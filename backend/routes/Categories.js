@@ -4,6 +4,7 @@ const authMiddleware = require("../middleware/AuthMiddleware");
 const adminMiddleware = require("../middleware/AdminMiddleware");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
 const router = express.Router();
 
@@ -47,32 +48,76 @@ router.post("/", authMiddleware, adminMiddleware, upload.single("image"), async 
 //Kategori güncelle (resim opsiyonel)
 router.put("/:id", authMiddleware, adminMiddleware, upload.single("image"), async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, removeImage} = req.body;
     const updateData = { name };
 
-    if (req.file) {
-      updateData.image = "/uploads/categories/" + req.file.filename;
-    }
-
-    const category = await Category.findByIdAndUpdate(req.params.id, updateData, { new: true });
+    const category = await Category.findById(req.params.id);
     if (!category) return res.status(404).json({ message: "Kategori bulunamadı" });
 
-    res.json(category);
+    // Yeni resim yüklendiyse
+    if (req.file) {
+      // Eski resmi sil
+      if (category.image) {
+        const oldPath = path.resolve(__dirname, "..", category.image.replace(/^\//, "")); 
+        if (fs.existsSync(oldPath)) {
+          fs.unlink(oldPath, (err) => {
+            if (err) console.warn("Eski kategori resmi silinemedi:", err.message);
+          });
+        }
+      }
+
+      updateData.image = "/uploads/categories/" + req.file.filename;
+    }
+    else if ( removeImage === "true") {
+      if (category.image) {
+        const oldPath = path.join(__dirname, "..", category.image);
+        fs.unlink(oldPath, (err) => {
+          if (err) console.warn("Kategori resmi silinemedi:", err.message)
+        });
+      }
+      updateData.image = null;
+    }
+
+    const updatedCategory = await Category.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+
+    res.json(updatedCategory);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("Kategori güncellenirken hata:", err);
+    res.status(500).json({ message: "Sunucu hatası" });
   }
 });
+
+
 
 // Kategori sil
 router.delete("/:id", authMiddleware, adminMiddleware, async (req, res) => {
   try {
     const category = await Category.findByIdAndDelete(req.params.id);
-    if (!category) return res.status(404).json({ message: "Kategori bulunamadı" });
+    if (!category) {
+      return res.status(404).json({ message: "Kategori bulunamadı" });
+    }
 
-    res.json({ message: "Kategori silindi" });
+    // Fotoğrafı da sil
+    if (category.image) {
+      const filePath = path.join(__dirname, "..", category.image); // "../uploads/categories/..."
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.warn("Kategori resmi silinemedi:", err.message);
+        } else {
+          console.log("Kategori resmi silindi:", filePath);
+        }
+      });
+    }
+
+    res.json({ message: "Kategori ve resmi silindi" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 module.exports = router;
