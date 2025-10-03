@@ -1,5 +1,6 @@
 import React from 'react'
 import {Formik, Field, Form} from "formik"
+import "../App.css"
 
 function Login() {
     const handleSubmit = async (values,{setSubmitting}) =>{
@@ -35,8 +36,9 @@ function Login() {
                  }
     }
   return (
-    <div className='form-wrapper'>
-        <div className="form-container">
+    <div className='admin-form-wrapper'>
+        <h1>Admin Girişi</h1>
+        <div className="admin-form-container">
             <Formik initialValues={{
                 email:"",
                 password:""
@@ -45,15 +47,15 @@ function Login() {
             >
             {({isSubmitting}) =>(
              <Form>
-                <div>
+                <div className='admin-form'>
                     <label >email</label>
-                    <Field id="email" name="email" placeholder="e-mail" disabled={isSubmitting}></Field>
+                    <Field className="form-input" id="email" name="email" placeholder="e-mail" disabled={isSubmitting}></Field>
                     </div>
-                <div>
+                <div className='admin-form'>
                     <label>Sifre</label>
-                    <Field id="password" name="password" type="password" placeholder="sifre" disabled={isSubmitting} ></Field>
+                    <Field className="form-input" id="password" name="password" type="password" placeholder="sifre" disabled={isSubmitting} ></Field>
                 </div>
-                  <button type='submit' disabled={isSubmitting}>Giris Yap</button>
+                  <button className='btn-login' type='submit' disabled={isSubmitting}>Giris Yap</button>
             </Form>
             )}
 

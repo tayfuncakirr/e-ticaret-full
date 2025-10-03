@@ -76,26 +76,27 @@ function ProductList() {
     
   return (
     <>
-    <div>
+    <div className='products-wrapper'>
         {products.map((product) => (
-            <div key={product._id}>
+            <div className='product-box' key={product._id}>
                 {product.images && product.images.length > 0 &&(
-                    <img  src={`http://localhost:5000/${product.images[0].replace(/^\/+/, '')}`}  alt={product.name} width={100}/>
+                    <div className='product-image-box'><img  src={`http://localhost:5000/${product.images[0].replace(/^\/+/, '')}`}  alt={product.name} width={100}/></div>
                 )}
                 <p>{product.name}</p>
                 <p>{product.description}</p>
                 <p>{product.stock}</p>
                 <p>{product.price}</p>
                  
-                <button onClick={() => setEditingProduct(product)} disabled= {!token}>Ürünü Düzenle</button>
-                <button onClick={() => handleDelete(product._id)} disabled= {!token} >Ürünü Sil</button>
-                <hr />
+                <div className='products-btn-container'>
+                  <button onClick={() => setEditingProduct(product)} disabled= {!token}>Ürünü Düzenle</button>
+                  <button onClick={() => handleDelete(product._id)} disabled= {!token} >Ürünü Sil</button>
+                </div>
             </div>
         ))}
     </div>
 
     {editingProduct && (
-        <div>
+        <div className='product-modal-wrapper'>
             <Formik
                 enableReinitialize= {true}
                 initialValues={{
@@ -151,24 +152,24 @@ function ProductList() {
                 }}
             >
                 {({isSubmitting}) => (
-                    <Form>
-                        <div>
+                    <Form className="product-modal-container">
+                        <div className='product-modal-input-box'>
                             <label >Ürün adı</label>
                             <Field name="name" placeholder="ürün adı"></Field>
                         </div>
-                        <div>
+                        <div className='product-modal-input-box'>
                             <label >Stok </label>
                             <Field name="stock" type="number" placeholder="stok durumu"></Field>
                         </div>
-                        <div>
+                        <div className='product-modal-input-box'>
                             <label >fiyat</label>
                             <Field name="price" type="number" placeholder="fiyat"></Field>
                         </div>
-                        <div>
+                        <div className='product-modal-input-box'>
                             <label >açıklama</label>
                             <Field name="description" placeholder="açıklama"></Field>
                         </div>
-                        <div>
+                        <div className='product-modal-input-box'>
                             <label htmlFor="category">category</label>
                             <Field id="category"  as="select" name="category" placeholder="" >
                                 {category.map((cat) => ( 
@@ -178,14 +179,17 @@ function ProductList() {
                             </Field>
                         </div>
                         <div className='images-update'>
-                            <input type="file"
+                            <div>
+                                <input type="file"
                                      multiple onChange={handleImageChange} 
                                      placeholder='fotoğraf ekle' />
+                            </div>
+
                             {existingImages.map((img, i) =>{
                                 return (
                               //  const src = typeof img === "string" ? `http://localhost:5000${img}` : URL.createObjectURL(img);
                                       
-                                    <div key={i}>
+                                    <div className='image-box' key={i}>
                                         <img src={`http://localhost:5000${img}`} alt={`prewiew-${i}`} width={50} />
                                         <button type="button"
                                          onClick={() => {
@@ -209,8 +213,10 @@ function ProductList() {
                             ))}
                                 
                         </div>
-                        <button type='submit'  disabled={isSubmitting}>güncelle</button>
-                        <button onClick={() => setEditingProduct(null)}>iptal</button>
+                        <div className='product-modal-btn'>
+                            <button type='submit'  disabled={isSubmitting}>güncelle</button>
+                            <button onClick={() => setEditingProduct(null)}>iptal</button>
+                        </div>
                     </Form>
                 )}
             </Formik>
