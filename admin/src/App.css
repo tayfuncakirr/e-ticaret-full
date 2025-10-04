@@ -164,10 +164,21 @@ form .btn-login {
     height: 35px;
     margin-right: 30px;
 }
-.product-modal-container .images-update {
+ .images-update {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     border:1px solid rgb(184, 184, 184);
+ }
+ .images-update .images-select-box input{
+    position: relative;
+    top: -2px;
+ } 
+ .images-box {
+    width: 100%;
     display: flex;
+    align-items: center;
+    justify-content: flex-start;
     padding: 10px;
 }
 

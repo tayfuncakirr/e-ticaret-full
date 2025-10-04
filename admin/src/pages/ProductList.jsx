@@ -179,17 +179,17 @@ function ProductList() {
                             </Field>
                         </div>
                         <div className='images-update'>
-                            <div>
+                            <div className='images-select-box'>
                                 <input type="file"
                                      multiple onChange={handleImageChange} 
                                      placeholder='fotoğraf ekle' />
                             </div>
-
-                            {existingImages.map((img, i) =>{
+                               <div className='images-box'>
+                                {existingImages.map((img, i) =>{
                                 return (
                               //  const src = typeof img === "string" ? `http://localhost:5000${img}` : URL.createObjectURL(img);
-                                      
-                                    <div className='image-box' key={i}>
+                                
+                                    <div className='product-image-box' key={i}>
                                         <img src={`http://localhost:5000${img}`} alt={`prewiew-${i}`} width={50} />
                                         <button type="button"
                                          onClick={() => {
@@ -203,7 +203,7 @@ function ProductList() {
                                 )
                             })}
                             {newImages.map((file,i) =>(
-                                <div key={`new-${i}`}>
+                                <div className='new-image-box' key={`new-${i}`}>
                                     <img src={URL.createObjectURL(file)} width={50}  />
                                     <button type="button" onClick={() => {
                                         setNewImages((prev) => prev.filter((_,index) => 
@@ -211,6 +211,8 @@ function ProductList() {
                                             }}>x</button>
                                 </div>
                             ))}
+                               </div>
+                            
                                 
                         </div>
                         <div className='product-modal-btn'>
