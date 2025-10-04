@@ -140,6 +140,7 @@ function ProductList() {
                         setNewImages([]);
                         setDeleteImages([]);
                         fetchProducts();
+                        setEditingProduct("");
                     }
                         catch (e) {
                             console.error(e);

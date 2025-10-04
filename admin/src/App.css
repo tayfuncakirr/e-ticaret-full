@@ -181,4 +181,8 @@ form .btn-login {
     justify-content: flex-start;
     padding: 10px;
 }
-
+.images-box button {
+    background-color: none;
+    border: none;
+    cursor:pointer;
+}
