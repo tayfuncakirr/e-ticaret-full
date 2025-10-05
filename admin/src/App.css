@@ -186,3 +186,107 @@ form .btn-login {
     border: none;
     cursor:pointer;
 }
+
+/* -------- ProductsList.jsx end--------*/
+
+/* -------- ProductsForm.jsx start--------*/
+
+.product-form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.product-add-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 10px;
+    width: 400px;
+    height: auto;
+    border: 1px solid rgb(184, 184, 184);
+}
+.product-add-form label {
+    display: block;
+    margin:5px 0;
+}
+.product-add-form input {
+    width: 100%;
+    height: 30px;
+    padding: 5px;
+}
+.product-add-form button {
+    height: 30px;
+    cursor:pointer;
+}
+.preview-container {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    border: 1px solid rgb(184, 184, 184);
+    padding: 5px;
+    margin: 5px;
+}
+
+/* -------- ProductsForm.jsx end--------*/
+
+/* -------- CategoryForm.jsx start--------*/
+
+.category-form-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.category-form-container {
+    border: 1px solid rgb(184, 184, 184);
+    width: 350px;
+    padding: 5px;
+}
+.category-form-container label {
+    display: block;
+}
+.category-form-container input {
+    width: 100%;
+}
+.category-form-container div {
+    margin: 15px 0;
+}
+.category-form-container button {
+    width: 100%;
+    height: 35px;
+    cursor: pointer;
+}
+.category-list-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding: 10px;
+    gap: 10px;
+}
+.category-list-wrapper .category-list {
+    border: 1px solid rgb(184, 184, 184);
+    padding: 10px;
+    width: 150px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 15px;
+}
+.category-btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.category-btn-container button{
+    width: 60px;
+    cursor: pointer;
+}
+
+
+ 

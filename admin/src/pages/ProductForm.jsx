@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 function ProductForm() {
     const token = JSON.parse(localStorage.getItem("admin"))?.token;
     const [categories, setCategories] = useState([]);
+    const [previewImage, setPreviewImage] = useState([]);  
 
     useEffect(() => {
         fetch("http://localhost:5000/api/categories")
@@ -17,7 +18,7 @@ function ProductForm() {
  
   return (
     <div className='product-form'>
-        <h2>Admin Panel Dashboard</h2>
+        <h3>Yeni Ürün Ekle</h3>
         <Formik
          initialValues={{
            name: "",
@@ -54,6 +55,7 @@ function ProductForm() {
             console.log("yeni ürün:", data)
             alert("ürün başarıyla eklendi")
             resetForm()
+            setPreviewImage([]);
            }
            catch(e) {
             console.error("hata:", e)
@@ -61,33 +63,28 @@ function ProductForm() {
            }
          }}
         >
-            {({isSubmitting, setFieldValue}) =>(
-               <Form>
-                <div>
-                    <label htmlFor="name">name</label>
-                    <Field id="name" name="name" placeholder=""></Field>
+            {({isSubmitting, setFieldValue, values}) =>(
+               <Form className='product-add-form'>
+                    <div>
+                      <label htmlFor="name">name</label>
+                      <Field id="name" name="name" placeholder="Ürün adı giriniz..."></Field>
                     </div>
                     <div>
-                    <label htmlFor="description">description</label>
-                    <Field id="description" name="description" placeholder="" disabled={isSubmitting}></Field>
+                      <label htmlFor="description">description</label>
+                      <Field id="description" name="description" placeholder="Açıklama giriniz..." disabled={isSubmitting}></Field>
                     </div>
                     <div>
-                    <label htmlFor="price">price</label>
-                    <Field id="price" name="price" placeholder="" disabled={isSubmitting}></Field>
+                      <label htmlFor="price">price</label>
+                      <Field id="price" name="price" placeholder="Fiyat giriniz..." disabled={isSubmitting}></Field>
                     </div>
                     <div>
-                    <label htmlFor="stock">stock</label>
-                    <Field id="stock" name="stock" placeholder="" disabled={isSubmitting}></Field>
+                      <label htmlFor="stock">stock</label>
+                      <Field id="stock" name="stock" placeholder="Adet giriniz..." disabled={isSubmitting}></Field>
                     </div>
                     <div>
-                        <div>
-                            <label htmlFor="images">image</label>
-                            <input id="images" name="images" type="file"
-                            multiple onChange={(event) => {setFieldValue("images",event.currentTarget.files)}} 
-                            disabled={isSubmitting}></input>
-                        </div>
-                    <label htmlFor="category">category id</label>
-                    <Field id="category"  as="select" name="category" placeholder="" disabled={isSubmitting}>
+                        
+                    <label htmlFor="category">Kategori</label>
+                    <Field id="category"  as="select" name="category"  disabled={isSubmitting}>
                         <option value="">Kategori Seç</option>
                         {categories.map((cat) => (
                             <option value={cat._id} key={cat._id}>
@@ -96,6 +93,30 @@ function ProductForm() {
 
                         ))}
                     </Field>
+                    <div>
+                            <label htmlFor="images">image</label>
+                            <input id="images" name="images" type="file"
+                            multiple onChange={(event) => {
+                              const files = Array.from(event.currentTarget.files);
+                              setFieldValue("images", [...values.images,...files])
+                              const previews = files.map((file)=> URL.createObjectURL(file));
+                              setPreviewImage(prev => [...prev, ...previews])
+                            }} 
+                            disabled={isSubmitting}></input>
+                            <p>Seçilen dosya sayısı: {previewImage.length}</p>
+                            <div className='preview-container'>
+                              {previewImage.map((src,index)=> (
+                                <div className='preview-container-box' key={index} >
+                                <img src={src}  alt={`preview ${index}`} width={100}  />
+                                <span onClick={() => {
+                                  setPreviewImage((prev) => prev.filter((_, i) => index !== i ));
+                                  setFieldValue("images", values.images.filter((_, i) => i !== index));
+                                  }}>x</span>
+                                </div>
+                              ))
+                              }
+                            </div>
+                        </div>
                     </div>
                     <button type='submit' disabled={isSubmitting || !token}>Ekle</button>
             </Form>

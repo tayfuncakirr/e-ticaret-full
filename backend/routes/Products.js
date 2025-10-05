@@ -206,13 +206,31 @@ router.put("/:id", authMiddleware, adminMiddleware, upload.array("images", 10), 
 // 📌 Admin: Ürün sil
 router.delete("/:id", authMiddleware, adminMiddleware, async (req, res) => {
   try {
-    const product = await Product.findByIdAndDelete(req.params.id);
+    const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).json({ message: "Ürün bulunamadı" });
-    res.json({ message: "Ürün silindi" });
+
+    // ürün resimlerini sil
+    if (product.images && product.images.length > 0) {
+      product.images.forEach((imgPath) => {
+        // Eğer DB'de "/uploads/abc.jpg" şeklinde kayıtlıysa:
+        const filePath = path.join(process.cwd(), imgPath.replace(/^\/+/, ""));
+        
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+          console.log(`Silindi: ${filePath}`);
+        }
+      });
+    }
+
+    // ürünü DB'den sil
+    await Product.findByIdAndDelete(req.params.id);
+
+    res.json({ message: "Ürün ve resimleri silindi" });
   } catch (err) {
     console.error("DELETE ürün hatası:", err.message);
     res.status(500).json({ message: "Sunucu hatası" });
   }
 });
+
 
 module.exports = router;

@@ -81,25 +81,32 @@ catch (e) {
         
   return (
     <div>
-       <form onSubmit={handleSubmit}>
+       
+        <form onSubmit={handleSubmit} className='category-form-wrapper'>
+            <div className='category-form-container'>
         <div>
             <label>Kategori adı</label>
-            <input type="text" value={name}  onChange={(e) => setName(e.target.value) } />
+            <input type="text" value={name} placeholder='Kategori Adı' onChange={(e) => setName(e.target.value) } />
         </div>
         <div>
             <label htmlFor="">Fotoğraf ekle</label>
             <input type="file"  accept='image/*' onChange={(e) => setImage(e.target.files[0])} />
         </div>
         <button type='submit' disabled= {!token}>Kategori Ekle</button>
+        </div>
        </form>
-       <div>
-            {category.map((cat)=>(
-                <div key={cat._id}>
+       
+       <div className='category-list-wrapper'>
+                {category.map((cat)=>(
+                <div className="category-list" key={cat._id}>
                     <p>{cat.name}</p>
-                    <button onClick={() => deleteCategory(cat._id)} disabled= {!token}>Sil</button>
-                    <button onClick={() => setEditingCategory(cat)} disabled= {!token} >Düzenle</button>
+                    <div className="category-btn-container">
+                      <button onClick={() => setEditingCategory(cat)} disabled= {!token} >Düzenle</button>
+                      <button onClick={() => deleteCategory(cat._id)} disabled= {!token}>Sil</button>
+                    </div>
                 </div>
             ))}
+            
             {editingCategory && (
                 <div>
                     <Formik 
