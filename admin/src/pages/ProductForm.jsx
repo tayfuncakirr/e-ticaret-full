@@ -107,7 +107,7 @@ function ProductForm() {
                             <div className='preview-container'>
                               {previewImage.map((src,index)=> (
                                 <div className='preview-container-box' key={index} >
-                                <img src={src}  alt={`preview ${index}`} width={100}  />
+                                <img src={src}  alt={`preview ${index}`} width={80}  />
                                 <span onClick={() => {
                                   setPreviewImage((prev) => prev.filter((_, i) => index !== i ));
                                   setFieldValue("images", values.images.filter((_, i) => i !== index));

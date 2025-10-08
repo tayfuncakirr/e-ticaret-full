@@ -80,6 +80,23 @@ form .btn-login {
     padding:0 10px;
     text-decoration: none;
 }
+.admin-log-btn {
+    position: absolute;
+    right: 10px;
+}
+.admin-log-btn button {
+    background-color: #fff;
+    border-radius: 5px;
+    border: none;
+    height: 30px;
+    width: 80px;
+    cursor: pointer;
+    transition: .2s ease-out;
+}
+.admin-log-btn button:hover {
+    background-color: #b4b4b4;
+}
+
 
 /* -------- Navbar.jsx end--------*/
 
@@ -125,6 +142,11 @@ form .btn-login {
     border: 1px solid rgb(184, 184, 184);
     width: 47%;
     height: 30px;
+    cursor: pointer;
+    transition: .2s ease-out;
+}
+.product-box .products-btn-container button:hover {
+    background-color: rgb(167, 167, 167);
 }
 
 .product-modal-wrapper {
@@ -163,6 +185,7 @@ form .btn-login {
     width: 100px;
     height: 35px;
     margin-right: 30px;
+    cursor: pointer;
 }
  .images-update {
     display: flex;
@@ -198,6 +221,10 @@ form .btn-login {
     justify-content: center;
     flex-direction: column;
 }
+.product-form h3 {
+    padding: 10px 0;
+    color: rgb(49, 49, 49);
+}
 .product-add-form {
     display: flex;
     flex-direction: column;
@@ -227,6 +254,13 @@ form .btn-login {
     border: 1px solid rgb(184, 184, 184);
     padding: 5px;
     margin: 5px;
+    max-height: 250px;
+    overflow-y: scroll;
+}.preview-container img {
+    margin: 5px;
+}
+.preview-container-box span {
+    cursor: pointer;
 }
 
 /* -------- ProductsForm.jsx end--------*/
@@ -246,6 +280,7 @@ form .btn-login {
 }
 .category-form-container label {
     display: block;
+    margin-bottom: 5px;
 }
 .category-form-container input {
     width: 100%;

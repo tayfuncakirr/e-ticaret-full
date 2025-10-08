@@ -42,7 +42,7 @@ router.post("/login", async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: "Şifre hatalı" });
 
     // Token oluştur
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
     res.json({ token, user: { id: user._id, name: user.name, email: user.email, role: user.role || "user" } });
   } catch (err) {
