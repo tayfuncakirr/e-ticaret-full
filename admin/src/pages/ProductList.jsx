@@ -1,6 +1,8 @@
 import React from 'react'
 import { useEffect,useState } from 'react'
 import {Formik, Field, Form} from "formik"
+import { useOutletContext } from 'react-router-dom';
+
 
 
 function ProductList() {
@@ -14,6 +16,8 @@ function ProductList() {
     const [newImages, setNewImages] = useState([]);
     const [existingImages, setExistingImages] = useState([]);
     const [category, setCategory] = useState([]);
+    const {searchTerm} = useOutletContext();
+    
 
 
     const fetchProducts = async() => {
@@ -77,7 +81,15 @@ function ProductList() {
   return (
     <>
     <div className='products-wrapper'>
-        {products.map((product) => (
+    {products.filter(product => {
+        if (!searchTerm) return true;
+        const term = searchTerm.toLowerCase();
+        return (
+            product.name?.toLowerCase().includes(term) ||
+            product.description?.toLowerCase().includes(term) ||
+            product.sku?.toLowerCase().includes(term)     
+        );
+    }).map((product) => (
             <div className='product-box' key={product._id}>
                 {product.images && product.images.length > 0 &&(
                     <div className='product-image-box'><img  src={`http://localhost:5000/${product.images[0].replace(/^\/+/, '')}`}  alt={product.name} width={100}/></div>
@@ -86,6 +98,7 @@ function ProductList() {
                 <p>{product.description}</p>
                 <p>{product.stock}</p>
                 <p>{product.price}</p>
+                <p>{product.sku}</p>
                  
                 <div className='products-btn-container'>
                   <button onClick={() => setEditingProduct(product)} disabled= {!token}>Ürünü Düzenle</button>
@@ -94,6 +107,7 @@ function ProductList() {
             </div>
         ))}
     </div>
+    
 
     {editingProduct && (
         <div className='product-modal-wrapper'>
@@ -103,6 +117,7 @@ function ProductList() {
                     name:editingProduct.name ?? "",
                     price:editingProduct.price ??"",
                     stock:editingProduct.stock ?? "",
+                    sku:editingProduct.sku ?? "",
                     description:editingProduct.description ?? "",
                     category:editingProduct.category._id ?? "",
                 }}
@@ -114,6 +129,7 @@ function ProductList() {
                         formData.append("price", values.price);
                         formData.append("stock", values.stock);
                         formData.append("description", values.description);
+                        formData.append("sku", values.sku);
                         formData.append("category", typeof values.category === "string"
                             ? values.category
                             : values.category._id
@@ -169,6 +185,10 @@ function ProductList() {
                         <div className='product-modal-input-box'>
                             <label >açıklama</label>
                             <Field name="description" placeholder="açıklama"></Field>
+                        </div>
+                        <div className='product-modal-input-box'>
+                            <label >Ürün Kdou</label>
+                            <Field name="sku" placeholder="Ürün kodu"></Field>
                         </div>
                         <div className='product-modal-input-box'>
                             <label htmlFor="category">category</label>

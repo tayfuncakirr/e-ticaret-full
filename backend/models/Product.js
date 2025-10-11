@@ -5,7 +5,8 @@ const ProductSchema = new mongoose.Schema({
   description: { type: String },
   price: { type: Number, required: true },
   stock: { type: Number, default: 0 }, 
-  images: [{ type: String }], 
+  images: [{ type: String }],
+  sku:{type: String, unique:true},
   category: { 
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category", // Category koleksiyonuna referans

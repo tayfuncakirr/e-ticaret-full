@@ -29,7 +29,7 @@ function CategoryForm() {
              formData.append("name", name);
              if (image) {
              formData.append("image", image)
-    }
+                        }
         const response = await fetch("http://localhost:5000/api/categories", {
             method:"POST",
             headers: {

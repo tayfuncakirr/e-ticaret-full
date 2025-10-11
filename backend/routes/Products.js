@@ -123,13 +123,17 @@ router.get("/:id", async (req, res) => {
 // 📌 Admin: Ürün ekle
 router.post("/", authMiddleware, adminMiddleware, upload.array("images", 10), async (req, res) => {
   try {
-    const { name, description, price, stock, category } = req.body;
+    const { name, description, price, stock, category, sku } = req.body;
     let imagePaths = [];
 
     if (req.files && req.files.length > 0) {
       imagePaths = await processImages(req.files);
     }
-
+    
+    let finalSku = sku;
+    if (!finalSku) {
+      finalSku = "SKU-" + Date.now().toString().slice(-6);
+    }
     const product = new Product({
       name,
       description,
@@ -137,6 +141,7 @@ router.post("/", authMiddleware, adminMiddleware, upload.array("images", 10), as
       stock,
       category,
       images: imagePaths,
+      sku: finalSku
     });
 
     await product.save();
@@ -155,7 +160,7 @@ router.put("/:id", authMiddleware, adminMiddleware, upload.array("images", 10), 
     console.log("📦 Body:", req.body);
     console.log("🖼️ Dosyalar:", req.files);
 
-    const { name, price, description, stock, category } = req.body;
+    const { name, price, description, stock, category, sku } = req.body;
     let deleteImages = [];
 
     if (req.body.deleteImages) {
@@ -175,7 +180,7 @@ router.put("/:id", authMiddleware, adminMiddleware, upload.array("images", 10), 
       product.images = product.images.filter(img => !deleteImages.includes(img));
       deleteImages.forEach(imgPath => {
         const filePath = path.join(__dirname, "..", imgPath.replace(/^\/+/, ""));
-        deleteFileSafe(filePath); // async güvenli sil
+         deleteFileSafe(filePath); // async güvenli sil
       });
     }
 
@@ -186,6 +191,7 @@ router.put("/:id", authMiddleware, adminMiddleware, upload.array("images", 10), 
     }
     product.images = [...product.images, ...imagesPath];
 
+    if (sku !== undefined && sku !== "") product.sku = sku;
     // Diğer alanları güncelle
     if (name !== undefined) product.name = name;
     if (price !== undefined) product.price = Number(price);

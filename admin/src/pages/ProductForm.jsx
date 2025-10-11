@@ -27,6 +27,7 @@ function ProductForm() {
            stock: "",
            images: [],
            category: "",
+           sku:"",
          }} 
          onSubmit={async (values,{resetForm}) => {
             const formData = new FormData();
@@ -82,7 +83,10 @@ function ProductForm() {
                       <Field id="stock" name="stock" placeholder="Adet giriniz..." disabled={isSubmitting}></Field>
                     </div>
                     <div>
-                        
+                      <label htmlFor="sku">Ürün Kodu</label>
+                      <Field id="sku" name="sku" placeholder="Ürün kodu giriniz..." disabled={isSubmitting}></Field>
+                    </div>
+                    <div>
                     <label htmlFor="category">Kategori</label>
                     <Field id="category"  as="select" name="category"  disabled={isSubmitting}>
                         <option value="">Kategori Seç</option>
