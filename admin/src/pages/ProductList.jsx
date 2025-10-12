@@ -92,7 +92,7 @@ function ProductList() {
     }).map((product) => (
             <div className='product-box' key={product._id}>
                 {product.images && product.images.length > 0 &&(
-                    <div className='product-image-box'><img  src={`http://localhost:5000/${product.images[0].replace(/^\/+/, '')}`}  alt={product.name} width={100}/></div>
+                    <div className='product-image-box'><img  src={`http://localhost:5000/${product.images[0].replace(/^\/+/, '')}`}  alt={product.name}/></div>
                 )}
                 <p>{product.name}</p>
                 <p>{product.description}</p>

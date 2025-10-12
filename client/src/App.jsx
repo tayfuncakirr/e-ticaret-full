@@ -16,8 +16,8 @@ function App() {
   return (
     <ProductsProvider>
     <BrowserRouter>
-    <Category/>
     <Navbar user={user} setUser={setUser}/>
+    <Category/>
     <Routes>
       <Route path='/' index element={<Home/>}/>
       <Route path='/products' element={<Products/>}/>

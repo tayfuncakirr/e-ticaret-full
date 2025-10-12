@@ -6,7 +6,6 @@ function Category() {
   
   return (
     <div className='category-container'>
-      <h2>Kategoriler</h2>
       {category.map((cat) => (
         <div key={cat._id}>
           {cat.name}

@@ -20,13 +20,13 @@ function Products() {
         {
         products.map((product) =>(
             <div key={product._id} className='product-card'>
-                {product.images && product.images.map((img, index) => (
-                    <img key={index} src={`http://localhost:5000${product.images[0]}`} alt={product.name} width={100}/>
-                ))}
+                {product.images && product.images.length > 0 &&(
+                    <div className='product-image-box'><img  src={`http://localhost:5000/${product.images[0].replace(/^\/+/, '')}`}  alt={product.name} width={100}/></div>
+                )}
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>
                 <p>{product.price} ₺</p>
-
+                 <div className='products-btn-box'><button>Sepete Ekle</button></div>
             </div>
         ))
         }
