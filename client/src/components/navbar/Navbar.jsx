@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import {Link} from "react-router-dom"
 import  styles from "./styles.module.css"
+import SearchModal from './SearchModal';
 
 function Navbar({user, setUser}) {
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) setUser(JSON.parse(storedUser))
   },[])
   return (
-    
+    <>
     <nav className={styles.nav}>
       <div className={styles.left}>
         <div className={styles.logo}>
@@ -20,6 +22,10 @@ function Navbar({user, setUser}) {
             <Link to="/products">Products</Link>
           </li>
         </ul>
+      </div>
+      <div>
+        <input type="text" placeholder='Ara' value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
+        <button>Ara</button>
       </div>
       {user ? (
         <div>
@@ -39,6 +45,8 @@ function Navbar({user, setUser}) {
       
     </nav>
 
+    <SearchModal inputValue = {inputValue}/>
+       </>
   )
 }
 

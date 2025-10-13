@@ -37,6 +37,7 @@ body {
   width: 100%;
 }
 
+/* products.jsx*/
 
 .products {
     width: 100%;
@@ -84,10 +85,35 @@ body {
   transform: scale(1.1);
 }
 
+/* category.jsx*/
 .category-container {
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 15px;
+}
+.category-container div {
+  cursor: pointer;
+}
+
+ /* searchModal.jsx */
+
+.filtered-product-container {
+  position: absolute;
+  top: 80px;
+  border: 1px solid red;
+  left: calc(50% - 300px);
+  width: 600px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  background-color: #fff;
+  z-index: 1;
+}
+.filtered-product-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  border: 1px solid gray;
 }
