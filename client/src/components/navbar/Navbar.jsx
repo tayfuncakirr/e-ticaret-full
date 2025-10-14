@@ -6,6 +6,7 @@ import SearchModal from './SearchModal';
 function Navbar({user, setUser}) {
   const [inputValue, setInputValue] = useState("");
 
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) setUser(JSON.parse(storedUser))
@@ -23,7 +24,7 @@ function Navbar({user, setUser}) {
           </li>
         </ul>
       </div>
-      <div>
+      <div className='search-input'>
         <input type="text" placeholder='Ara' value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
         <button>Ara</button>
       </div>
@@ -45,7 +46,7 @@ function Navbar({user, setUser}) {
       
     </nav>
 
-    <SearchModal inputValue = {inputValue}/>
+    <SearchModal inputValue = {inputValue} setInputValue={setInputValue}/>
        </>
   )
 }

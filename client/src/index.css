@@ -97,6 +97,17 @@ body {
   cursor: pointer;
 }
 
+.filtered-category-container {
+  position: absolute;
+  z-index: 10;
+  background-color: #fff;
+  width: 600px;
+  top: 80px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(100px, 1fr));
+  border: 1px solid red;
+}
+
  /* searchModal.jsx */
 
 .filtered-product-container {
@@ -109,6 +120,8 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   background-color: #fff;
   z-index: 1;
+  gap: 20px;
+  padding: 20px;
 }
 .filtered-product-list {
   display: flex;
@@ -117,3 +130,4 @@ body {
   flex-direction: column;
   border: 1px solid gray;
 }
+
