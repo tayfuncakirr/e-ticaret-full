@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import {Link} from "react-router-dom"
+import {Link, useLocation} from "react-router-dom"
 import  styles from "./styles.module.css"
 import SearchModal from './SearchModal';
 
-function Navbar({user, setUser}) {
+function Navbar({user, setUser, setShowBasket}) {
   const [inputValue, setInputValue] = useState("");
-
+  const location = useLocation();
+  
+  useEffect(() => {
+    setShowBasket(false);
+  },[location.pathname]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -41,9 +45,9 @@ function Navbar({user, setUser}) {
         <div className={styles.right}>
         <Link to="signin"> <button className='login'>Login</button></Link>
         <Link to="signup"><button className='register'>Register</button></Link>
+        <button onClick={() => setShowBasket(prev => !prev)}>Basket</button>
         </div>
       )}
-      
     </nav>
 
     <SearchModal inputValue = {inputValue} setInputValue={setInputValue}/>

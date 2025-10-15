@@ -1,8 +1,10 @@
 import React, { useContext } from 'react'
 import { ProductsContext } from '../../context/ProductsContext'
+import { BasketContext } from '../../context/BasketContext';
 
 
 function Products() {
+    const {addToBasket} = useContext(BasketContext);
     const {products} = useContext(ProductsContext);
     const {page,setPage} = useContext(ProductsContext);
     const {totalPages} = useContext(ProductsContext);
@@ -26,7 +28,7 @@ function Products() {
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>
                 <p>{product.price} ₺</p>
-                 <div className='products-btn-box'><button>Sepete Ekle</button></div>
+                 <div className='products-btn-box'><button onClick={() => addToBasket(product)}>Sepete Ekle</button></div>
             </div>
         ))
         }

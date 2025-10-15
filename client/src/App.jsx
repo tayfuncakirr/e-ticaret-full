@@ -9,15 +9,22 @@ import Products from './pages/products/Products'
 import Category from './pages/categories/Category'
 import ProductsProvider from './context/ProductsContext'
 import Home from './pages/home/Home'
+import Basket from './components/Basket'
+import BasketProvider from './context/BasketContext'
 
 function App() {
    const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")))
+   const [showBasket, setShowBasket] = useState(false);
 
   return (
     <ProductsProvider>
-    <BrowserRouter>
-    <Navbar user={user} setUser={setUser}/>
-    <Category/>
+    <BasketProvider>
+      <BrowserRouter>
+    <Navbar user={user} setUser={setUser} setShowBasket={setShowBasket}/>
+    <Category/>  
+    {
+      showBasket && <Basket/>
+    }
     <Routes>
       <Route path='/' index element={<Home/>}/>
       <Route path='/products' element={<Products/>}/>
@@ -26,6 +33,7 @@ function App() {
       
     </Routes>
     </BrowserRouter>
+    </BasketProvider>
     </ProductsProvider>
     
   )
