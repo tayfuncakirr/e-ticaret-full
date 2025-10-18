@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useRef, useState} from 'react'
 import { ProductsContext } from '../../context/ProductsContext'
+import { BasketContext } from '../../context/BasketContext';
 
 function Category() {
   const {category, products} = useContext(ProductsContext);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const containerRef = useRef(null);
+  const {addToBasket} = useContext(BasketContext);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -52,7 +54,7 @@ function Category() {
             <p>{product.name}</p>
             <p>{product.description}</p>
             <p>{product.price}</p>
-            <button>Sepete Ekle</button>
+            <button onClick={() => addToBasket(product)}>Sepete Ekle</button>
            </div>
           )
         )}

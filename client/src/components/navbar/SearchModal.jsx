@@ -1,10 +1,12 @@
 import React from 'react'
 import { useContext, useEffect, useRef } from 'react'
 import { ProductsContext } from '../../context/ProductsContext'
+import { BasketContext } from '../../context/BasketContext';
 
 
 function SearchModal({inputValue, setInputValue}) {
   const {products} = useContext(ProductsContext);
+  const {addToBasket} = useContext(BasketContext);
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -20,7 +22,7 @@ function SearchModal({inputValue, setInputValue}) {
     },[])
   
 
-  const filtered = products.filter((product) => 
+    const filtered = products.filter((product) => 
     product.name?.toLowerCase().includes(inputValue.toLowerCase()) ||
     product.sku?.toLowerCase().includes(inputValue.toLowerCase())  ||
     product.description?.toLowerCase().includes(inputValue.toLowerCase()) ||
@@ -39,7 +41,7 @@ function SearchModal({inputValue, setInputValue}) {
             )}
             <p>{product.name}</p>
             <p>{product.price}</p>
-            <button>Sepete ekle</button>
+            <button onClick={() => addToBasket(product)}>Sepete ekle</button>
           </div>
         ))}
       </div>

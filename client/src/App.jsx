@@ -11,30 +11,32 @@ import ProductsProvider from './context/ProductsContext'
 import Home from './pages/home/Home'
 import Basket from './components/Basket'
 import BasketProvider from './context/BasketContext'
+import Payment from './pages/pay/Payment'
 
 function App() {
    const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")))
    const [showBasket, setShowBasket] = useState(false);
 
   return (
+    <BrowserRouter>
     <ProductsProvider>
-    <BasketProvider>
-      <BrowserRouter>
+    <BasketProvider user={user} setUser={setUser}>
     <Navbar user={user} setUser={setUser} setShowBasket={setShowBasket}/>
     <Category/>  
     {
-      showBasket && <Basket/>
+      showBasket && <Basket setShowBasket={setShowBasket} user={user}/>
     }
     <Routes>
       <Route path='/' index element={<Home/>}/>
       <Route path='/products' element={<Products/>}/>
       <Route path="/signin" element={<Signin setUser={setUser}/>}/>
       <Route path="/signup" element={<Signup setUser={setUser}/>}/>
+      <Route path="/payment" element={<Payment/>}/>
       
     </Routes>
-    </BrowserRouter>
     </BasketProvider>
     </ProductsProvider>
+    </BrowserRouter>
     
   )
 }

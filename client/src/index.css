@@ -144,5 +144,10 @@ body {
   position: absolute;
   right: 0;
   top: 80px;
+  z-index: 10;
+  background-color: #fff;
+ }
+ .basket-container ul li {
+  list-style-type: none;
  }
 
