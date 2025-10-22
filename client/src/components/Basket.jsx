@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { BasketContext } from '../context/BasketContext'
+import { VscChromeClose } from "react-icons/vsc";
 
 function Basket({setShowBasket}) {
 
@@ -20,23 +21,23 @@ function Basket({setShowBasket}) {
         {basketItems.length === 0 ? (
             <p>Sepet boş</p>
         ): (
-            <ul>
-                <span onClick={() => setShowBasket(false)}>x</span>
+            <div className='basket-item-container'>
+                <span className='close-btn' onClick={() => setShowBasket(false)}><VscChromeClose/></span>
                 {basketItems.map((item,index) => 
-                    <li key={item._id}> 
-                     {item.name} x {item.quantity}
-                     <p>{item.quantity * item.price}</p>
-
-                     <span onClick={() => increaseQuantity(index)}>artı</span>
-
-                     <span onClick={() => decreaseQuantity(index)}>eksi</span>
-                     <button onClick={() => removeBasketItem(index)}>Sil</button>
-
+                    <li  className='basket-item' key={item._id}> 
+                     <p>{item.name}</p>
+                      <div className='amount-box'>
+                        <span onClick={() => decreaseQuantity(index)}>-</span>
+                        <p>{item.quantity}</p>
+                        <span onClick={() => increaseQuantity(index)}>+</span>
+                        <button onClick={() => removeBasketItem(index)}>Sil</button>
+                      </div>
+                      <p>{item.quantity * item.price} TL</p>
                     </li>
                 )}
                 <p >Sepet: {total} ₺</p>
                 <button onClick={handleCheckOut}>Sepeti Onayla</button>
-            </ul>
+            </div>
         )}
     </div>
   )

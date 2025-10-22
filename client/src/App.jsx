@@ -12,6 +12,7 @@ import Home from './pages/home/Home'
 import Basket from './components/Basket'
 import BasketProvider from './context/BasketContext'
 import Payment from './pages/pay/Payment'
+import ProductsDetails from './pages/products/ProductsDetails'
 
 function App() {
    const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")))
@@ -32,6 +33,7 @@ function App() {
       <Route path="/signin" element={<Signin setUser={setUser}/>}/>
       <Route path="/signup" element={<Signup setUser={setUser}/>}/>
       <Route path="/payment" element={<Payment/>}/>
+      <Route path='/products/productdetails/:id' element={<ProductsDetails/>}/>
       
     </Routes>
     </BasketProvider>

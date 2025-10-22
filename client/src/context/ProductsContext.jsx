@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const ProductsContext = createContext();
 
@@ -8,6 +9,7 @@ function ProductsProvider({children}){
     const [totalPages, setTotalPages] = useState(1);
     const [category, setCategory] = useState([]);
     const [total, setTotal] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(()=>{
      fetch(`http://localhost:5000/api/products?page=${page}&limit=10`)
@@ -30,9 +32,12 @@ function ProductsProvider({children}){
         .then(data => setCategory(data))
         .catch((e) => console.log(e))
     },[])
-
+ 
+    const handleProductDetails = (id) => {
+        navigate(`/products/productdetails/${id}`)
+    }
     return (
-        <ProductsContext.Provider value={{products,category,page,totalPages,total,setPage}}>
+        <ProductsContext.Provider value={{products,category,page,totalPages,total,setPage, handleProductDetails}}>
             {children}
         </ProductsContext.Provider>
     )

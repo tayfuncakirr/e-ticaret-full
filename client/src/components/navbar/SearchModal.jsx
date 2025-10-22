@@ -5,7 +5,7 @@ import { BasketContext } from '../../context/BasketContext';
 
 
 function SearchModal({inputValue, setInputValue}) {
-  const {products} = useContext(ProductsContext);
+  const {products, handleProductDetails} = useContext(ProductsContext);
   const {addToBasket} = useContext(BasketContext);
   const containerRef = useRef(null);
 
@@ -33,7 +33,7 @@ function SearchModal({inputValue, setInputValue}) {
     {inputValue &&  (
       <div className='filtered-product-container' ref={containerRef}>
         {filtered.map((product) => (
-          <div className='filtered-product-list' key={product._id}>
+          <div className='filtered-product-list' key={product._id} onClick={() => handleProductDetails(product._id)}>
             {product.images && product.images.length > 0 && (
               <div className='filtered-product-image'> 
                 <img src={`http://localhost:5000/${product.images[0].replace(/^\/+/, '')}`}  alt={product.name} width={70} />
@@ -41,7 +41,7 @@ function SearchModal({inputValue, setInputValue}) {
             )}
             <p>{product.name}</p>
             <p>{product.price}</p>
-            <button onClick={() => addToBasket(product)}>Sepete ekle</button>
+            <button onClick={(e) => {e.stopPropagation(); addToBasket(product)}}>Sepete ekle</button>
           </div>
         ))}
       </div>

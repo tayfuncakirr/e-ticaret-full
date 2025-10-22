@@ -3,12 +3,19 @@ import { ProductsContext } from '../../context/ProductsContext'
 import { BasketContext } from '../../context/BasketContext';
 
 
+
 function Products() {
     const {addToBasket} = useContext(BasketContext);
-    const {products} = useContext(ProductsContext);
-    const {page,setPage} = useContext(ProductsContext);
-    const {totalPages} = useContext(ProductsContext);
-    const {total} = useContext(ProductsContext);
+    const {
+        products,
+        page,
+        setPage,
+        handleProductDetails,
+        totalPages,
+        total
+    } = useContext(ProductsContext);
+    
+    
 /*
     useEffect(() => {
         fetch("http://localhost:5000/api/products")
@@ -21,14 +28,14 @@ function Products() {
     <div className='products'>
         {
         products.map((product) =>(
-            <div key={product._id} className='product-card'>
+            <div key={product._id} className='product-card' onClick={() => handleProductDetails(product._id)}>
                 {product.images && product.images.length > 0 &&(
                     <div className='product-image-box'><img  src={`http://localhost:5000/${product.images[0].replace(/^\/+/, '')}`}  alt={product.name} width={100}/></div>
                 )}
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>
                 <p>{product.price} ₺</p>
-                 <div className='products-btn-box'><button onClick={() => addToBasket(product)}>Sepete Ekle</button></div>
+                 <div className='products-btn-box'><button onClick={(e) => {e.stopPropagation(); addToBasket(product)}}>Sepete Ekle</button></div>
             </div>
         ))
         }

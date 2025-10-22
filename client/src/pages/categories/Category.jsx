@@ -3,7 +3,7 @@ import { ProductsContext } from '../../context/ProductsContext'
 import { BasketContext } from '../../context/BasketContext';
 
 function Category() {
-  const {category, products} = useContext(ProductsContext);
+  const {category, products, handleProductDetails} = useContext(ProductsContext);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const containerRef = useRef(null);
   const {addToBasket} = useContext(BasketContext);
@@ -20,8 +20,8 @@ function Category() {
     }
   },[])
 
-  const handleCategoryClick = (catId) =>{ const filtered =  products.filter((product) =>  {
-
+  const handleCategoryClick = (catId) =>{
+      const filtered =  products.filter((product) =>  {
       const productCatId =
       typeof product.category === "object"
         ? product.category._id
@@ -45,7 +45,7 @@ function Category() {
       <div className='filtered-category-container' ref={containerRef}>
         {filteredProducts.length > 0 &&(
           filteredProducts.map((product) => 
-           <div key={product._id}>
+           <div key={product._id} onClick={() => handleProductDetails(product._id)}>
             {product.images && product.images.length > 0 &&(
               <div className='filtered-product-image'> 
                 <img src={`http://localhost:5000/${product.images[0].replace(/^\/+/, '')}`}  alt={product.name} width={70} />
@@ -54,7 +54,7 @@ function Category() {
             <p>{product.name}</p>
             <p>{product.description}</p>
             <p>{product.price}</p>
-            <button onClick={() => addToBasket(product)}>Sepete Ekle</button>
+            <button onClick={(e) =>{e.stopPropagation(); addToBasket(product)}}>Sepete Ekle</button>
            </div>
           )
         )}
