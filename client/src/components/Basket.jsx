@@ -1,9 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef} from 'react'
+import { useLocation } from 'react-router-dom';
 import { BasketContext } from '../context/BasketContext'
 import { VscChromeClose } from "react-icons/vsc";
 
 function Basket({setShowBasket}) {
-
+    const location = useLocation();
+    const prevPath = useRef(location.pathname);
+        
     const {
            removeBasketItem,
            basketItems,
@@ -14,7 +17,12 @@ function Basket({setShowBasket}) {
 
     const total = basketItems.reduce((sum, item) => sum + item.price * item.quantity,0)
 
-    
+    useEffect(() => {
+          if(prevPath.current !== location.pathname) {
+            setShowBasket(false);
+          }
+          prevPath.current === location.pathname
+        },[location.pathname]);
   return (
     <div className='basket-container'>
 

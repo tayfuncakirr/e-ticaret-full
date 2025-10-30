@@ -13,6 +13,7 @@ import Basket from './components/Basket'
 import BasketProvider from './context/BasketContext'
 import Payment from './pages/pay/Payment'
 import ProductsDetails from './pages/products/ProductsDetails'
+import Favorites from './pages/Favorites'
 
 function App() {
    const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")))
@@ -32,6 +33,7 @@ function App() {
       <Route path='/products' element={<Products/>}/>
       <Route path="/signin" element={<Signin setUser={setUser}/>}/>
       <Route path="/signup" element={<Signup setUser={setUser}/>}/>
+       <Route path="/favoriler" element={<Favorites/>}/>
       <Route path="/payment" element={<Payment/>}/>
       <Route path='/products/productdetails/:id' element={<ProductsDetails/>}/>
       

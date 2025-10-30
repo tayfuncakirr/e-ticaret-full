@@ -2,24 +2,37 @@ import React from 'react'
 import { useContext, useEffect, useRef } from 'react'
 import { ProductsContext } from '../../context/ProductsContext'
 import { BasketContext } from '../../context/BasketContext';
+import { useLocation } from 'react-router-dom';
 
 
 function SearchModal({inputValue, setInputValue}) {
   const {products, handleProductDetails} = useContext(ProductsContext);
   const {addToBasket} = useContext(BasketContext);
   const containerRef = useRef(null);
+  const location = useLocation();
+  const prevPath = useRef(location.pathname);
+ 
+  
 
   useEffect(() => {
       const handleClickOutside = (e) => {
         if (containerRef.current && !containerRef.current.contains(e.target)) {
             setInputValue("");
         }
+        
       };
       document.addEventListener("mousedown", handleClickOutside);
       return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       }
     },[])
+
+    useEffect(() => {
+        if(prevPath.current !== location.pathname) {
+          setInputValue("");
+        }
+        prevPath.current === location.pathname
+    },[location.pathname])
   
 
     const filtered = products.filter((product) => 

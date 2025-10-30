@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import {Link, useLocation} from "react-router-dom"
+import {Link} from "react-router-dom"
 import  styles from "./styles.module.css"
 import SearchModal from './SearchModal';
 
 function Navbar({user, setUser, setShowBasket}) {
   const [inputValue, setInputValue] = useState("");
-  const location = useLocation();
   
-  useEffect(() => {
-    setShowBasket(false);
-  },[location.pathname]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -22,9 +18,12 @@ function Navbar({user, setUser, setShowBasket}) {
         <div className={styles.logo}>
           <Link to="/">Web sanatçısı</Link>
         </div>
-        <ul className="menu">
+        <ul className={styles.menu}>
           <li>
             <Link to="/products">Products</Link>
+          </li>
+          <li>
+            <Link to="/favoriler">Favoriler</Link>
           </li>
         </ul>
       </div>

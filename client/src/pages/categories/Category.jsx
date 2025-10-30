@@ -1,12 +1,22 @@
 import React, { useContext, useEffect, useRef, useState} from 'react'
 import { ProductsContext } from '../../context/ProductsContext'
 import { BasketContext } from '../../context/BasketContext';
+import { useLocation } from 'react-router-dom';
 
 function Category() {
   const {category, products, handleProductDetails} = useContext(ProductsContext);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const containerRef = useRef(null);
   const {addToBasket} = useContext(BasketContext);
+  const location = useLocation();
+  const prevPath = useRef(location.pathname);
+
+  useEffect(() => {
+    if (prevPath.current !== location.pathname) {
+      setFilteredProducts([]);
+    }
+    prevPath.current === location.pathname
+  },[location.pathname])
 
   useEffect(() => {
     const handleClickOutside = (e) => {

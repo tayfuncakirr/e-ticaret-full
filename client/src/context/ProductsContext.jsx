@@ -4,6 +4,11 @@ import { useNavigate } from "react-router-dom";
 export const ProductsContext = createContext();
 
 function ProductsProvider({children}){
+    const [bestItems, setBestItems] = useState(() => {
+        const saved = localStorage.getItem("bestItems");
+        return saved ? JSON.parse(saved) : [];
+    });
+
     const [products, setProducts] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -36,8 +41,23 @@ function ProductsProvider({children}){
     const handleProductDetails = (id) => {
         navigate(`/products/productdetails/${id}`)
     }
+
+    const toogleFavorite = ((product) => {
+        setBestItems((prev) =>{
+            const exists = prev.find((item) => item._id === product._id);
+            let updated;
+            if (exists) {
+                updated = prev.filter((item) => item._id !== product._id)
+            }
+            else {
+                updated= [...prev, product];
+            }
+            localStorage.setItem("bestItems", JSON.stringify(updated));
+            return updated;
+        })
+    })
     return (
-        <ProductsContext.Provider value={{products,category,page,totalPages,total,setPage, handleProductDetails}}>
+        <ProductsContext.Provider value={{products,category,page,totalPages,total,setPage, handleProductDetails, bestItems, toogleFavorite}}>
             {children}
         </ProductsContext.Provider>
     )
